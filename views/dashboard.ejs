@@ -1,0 +1,40 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <h6>Dashboard</h6>
+    </li>
+  </ol>
+</nav>
+<h1>Welcome, <%= name %></h1>
+<% if (stories.length) { %>
+<p>Here is your stories</p>
+<table class="table mt-4">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Status</th>
+      <th scope="col">Date</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% stories.forEach(story => { %>
+    <tr>
+      <td><a href="#"><%= story.title %></a></td>
+      <td><%= story.status %></td>
+      <td>
+        <%- helper.formatDate(story.createdAt, 'MMMM Do YYYY, hh:mm:ss a') %>
+      </td>
+      <td>
+        <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+        <button class="btn btn-danger ms-2">
+          <fas class="fas fa-trash-alt"></fas>
+        </button>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } else { %>
+<p>You haven't add any stories. Let's add the first one</p>
+<% } %>

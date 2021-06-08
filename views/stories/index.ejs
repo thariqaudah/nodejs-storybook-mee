@@ -1,0 +1,29 @@
+<h1 class="mb-4">Stories</h1>
+<div class="row">
+  <% if (stories) { %> <% stories.forEach(story => { %>
+  <div class="col-md-4 col-sm-12">
+    <div class="card text-center">
+      <%- helper.editIcon(story.user._id, user._id, story._id) %>
+      <div class="card-body">
+        <h4 class="card-title mb-2"><%= story.title %></h4>
+        <p class="card-text mb-4 fs-6">
+          <%= helper.stripTags(helper.truncate(story.body, 150)) %>
+        </p>
+        <a class="d-block" href="/stories/user/<%= story.user._id %>">
+          <span class="badge rounded-pill bg-light text-primary">
+            <img
+              class="rounded-circle badge-img me-2"
+              src="<%= story.user.photo %>"
+            />
+            <%= story.user.displayName %>
+          </span>
+        </a>
+        <div class="border-bottom p-3"></div>
+        <a class="btn btn-secondary mt-2" href="/stories/<%= story._id %>"
+          >Read More</a
+        >
+      </div>
+    </div>
+  </div>
+  <% }) %> <% } %>
+</div>

@@ -1,0 +1,23 @@
+<h1 class="mb-4">Add Story</h1>
+
+<form action="/stories" method="POST">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title:</label>
+    <input type="text" class="form-control" id="title" name="title" />
+  </div>
+  <div class="mb-3">
+    <label for="status" class="form-label">Status:</label>
+    <select class="form-select" name="status" id="status">
+      <option value="public" selected>Public</option>
+      <option value="private">Private</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="body" class="form-label">Tell us your story:</label>
+    <textarea class="form-control" name="body" id="body"></textarea>
+  </div>
+  <div class="mt-4">
+    <button class="btn btn-primary" type="submit">Create</button>
+    <a class="btn btn-secondary" type="button">Cancel</a>
+  </div>
+</form>

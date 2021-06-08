@@ -1,0 +1,42 @@
+<a class="d-block text-secondary mb-4" href="/stories"
+  ><i class="fas fa-arrow-left"></i> Back</a
+>
+<div class="row">
+  <div class="col-md-8 col-sm-12">
+    <div class="card mb-5">
+      <div class="card-body">
+        <div class="card-title d-flex align-items-center">
+          <h2 class="me-2"><%= story.title %></h2>
+          <span>
+            <%- helper.editIcon(story.user._id, user._id, story._id, true) %>
+          </span>
+        </div>
+        <div class="card-subtitle mb-4">
+          <span class="badge rounded-pill bg-light text-muted p-1 mb-2"
+            ><%- helper.formatDate(story.createdAt, 'DD MMMM YYYY') %></span
+          >
+          <span class="badge rounded-pill bg-light text-muted p-1 mb-2"
+            ><%= story.status%> story</span
+          >
+        </div>
+        <p class="card-text"><%- story.body %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="card text-center">
+      <img
+        class="card-image-top my-2 mx-auto rounded-circle"
+        src="<%= story.user.photo %>"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= story.user.displayName %></h5>
+      </div>
+      <div class="card-footer">
+        <a href="/stories/user/<%= story.user._id %>"
+          >More From <%= story.user.firstName %></a
+        >
+      </div>
+    </div>
+  </div>
+</div>
