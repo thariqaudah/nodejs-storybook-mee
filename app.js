@@ -4,6 +4,7 @@ const express = require('express');
 const colors = require('colors');
 const morgan = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
@@ -35,6 +36,9 @@ if (process.env.NODE_ENV === 'development') {
 // Bodyparser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// Method Override
+app.use(methodOverride('_method'));
 
 // Session
 app.use(

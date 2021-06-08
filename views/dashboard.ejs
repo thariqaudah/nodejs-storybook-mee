@@ -20,13 +20,13 @@
   <tbody>
     <% stories.forEach(story => { %>
     <tr>
-      <td><a href="#"><%= story.title %></a></td>
+      <td><a href="/stories/<%= story._id %>"><%= story.title %></a></td>
       <td><%= story.status %></td>
       <td>
         <%- helper.formatDate(story.createdAt, 'MMMM Do YYYY, hh:mm:ss a') %>
       </td>
       <td>
-        <a href="#" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+        <a href="/stories/edit/<%= story._id %>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
         <button class="btn btn-danger ms-2">
           <fas class="fas fa-trash-alt"></fas>
         </button>

@@ -68,21 +68,44 @@ router.post('/', requireAuth, async (req, res) => {
 // @path    GET /stories/edit/:id
 router.get('/edit/:id', requireAuth, async (req, res) => {
   try {
-    const story = await Story.findById(req.params.id).populate('user').lean();
-
-    console.log(story, req.user);
+    const story = await Story.findById(req.params.id).lean();
 
     if (!story) {
       return res.status(404).render('errors/404');
     }
 
-    if (story.user._id.toString() !== req.user._id.toString()) {
-      return res.status(401).render('errors/401');
+    if (story.user.toString() !== req.user._id.toString()) {
+      return res.redirect('/stories');
     }
 
     res.status(200).render('stories/edit', {
       story,
     });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('errors/500');
+  }
+});
+
+// @desc    Update single story
+// @path    PUT /stories/:id
+router.put('/:id', requireAuth, async (req, res) => {
+  try {
+    let story = await Story.findById(req.params.id);
+
+    if (!story) {
+      return res.status(404).render('errors/404');
+    }
+
+    if (story.user != req.user.id) {
+      return res.redirect('/stories');
+    }
+
+    story = await Story.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    res.status(200).redirect('/dashboard');
   } catch (err) {
     console.error(err);
     res.status(500).render('errors/500');
