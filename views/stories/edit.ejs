@@ -1,6 +1,7 @@
 <h1 class="mb-4">Edit Story</h1>
 
-<form action="/stories/<%= story._id %>?_method=PUT" method="POST">
+<form action="/stories/<%= story._id %>" method="POST">
+  <input type="hidden" name="_method" value="PUT">
   <div class="mb-3">
     <label for="title" class="form-label">Title:</label>
     <input

@@ -16,7 +16,9 @@ router.get('/', requireGuest, (req, res) => {
 // @path    GET /dashboard
 router.get('/dashboard', requireAuth, async (req, res) => {
   try {
-    let stories = await Story.find({ user: req.user._id }).lean();
+    let stories = await Story.find({ user: req.user._id })
+      .sort({ createdAt: 'desc' })
+      .lean();
 
     res.status(200).render('dashboard', {
       name: req.user.firstName,
@@ -25,6 +27,7 @@ router.get('/dashboard', requireAuth, async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    res.render('errors/500');
   }
 });
 

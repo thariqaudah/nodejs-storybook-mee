@@ -14,11 +14,11 @@ module.exports = {
   stripTags: function (input) {
     return input.replace(/<(?:.|\n)*?>/gm, '');
   },
-  editIcon: function (storyUser, loggedUser, storyId, iconLarge = false) {
-    if (storyUser.toString() === loggedUser.toString() && iconLarge) {
-      return `<a href="/stories/edit/${storyId}" class="text-primary ms-auto pt-2 pe-2"><i class="fas fa-edit icon-large"></i></a>`;
+  editIcon: function (storyUser, loggedUser, storyId, floating = false) {
+    if (storyUser.toString() === loggedUser.toString() && floating) {
+      return `<a href="/stories/edit/${storyId}" class="btn btn-primary btn-sm rounded-circle position-absolute top-0 start-100 translate-middle shadow-sm"><i class="fas fa-edit edit-small"></i></a>`;
     } else if (storyUser.toString() === loggedUser.toString()) {
-      return `<a href="/stories/edit/${storyId}" class="text-primary ms-auto pt-2 pe-2"><i class="fas fa-edit"></i></a>`;
+      return `<a href="/stories/edit/${storyId}" class="btn btn-primary rounded-circle shadow-sm"><i class="fas fa-edit edit-small"></i></a>`;
     }
     return '';
   },

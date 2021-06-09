@@ -33,13 +33,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Bodyparser
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-// Method Override
-app.use(methodOverride('_method'));
-
 // Session
 app.use(
   session({
@@ -59,7 +52,20 @@ app.locals.ejsHelper = require('./helpers/ejs');
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
-})
+});
+
+// Bodyparser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// Method Override
+app.use(methodOverride((req, res) => {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    let method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
 
 // Mount routes
 app.use('/', require('./routes/index'));
