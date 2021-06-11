@@ -50,6 +50,7 @@ router.get('/:id', requireAuth, async (req, res) => {
   try {
     let story = await Story.findOne({ _id: req.params.id })
       .populate('user')
+      .populate('comments')
       .lean();
 
     if (!story) {
