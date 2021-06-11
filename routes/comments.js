@@ -7,8 +7,13 @@ const router = express.Router();
 // @desc    Create a comment
 // @path    POST /comment
 router.post('/', requireAuth, async (req, res) => {
-  console.log(req.body);
-  res.end();
+  try {
+    await Comment.create({
+      ...req.body
+    });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 
