@@ -16,7 +16,7 @@ router.get('/', requireAuth, async (req, res) => {
     res.status(200).render('stories/index', {
       stories,
       helper: req.app.locals.ejsHelper,
-      subtitle: false
+      subtitle: false,
     });
   } catch (err) {
     console.error(err);
@@ -50,8 +50,13 @@ router.get('/:id', requireAuth, async (req, res) => {
   try {
     let story = await Story.findOne({ _id: req.params.id })
       .populate('user')
-      .populate('comments')
+      .populate({
+        path: 'comments',
+        populate: { path: 'user' },
+      })
       .lean();
+
+    console.log(story);
 
     if (!story) {
       return res.status(404).render('errors/404');
@@ -106,7 +111,7 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     story = await Story.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      runValidators: true
+      runValidators: true,
     });
     res.status(200).redirect('/dashboard');
   } catch (err) {
@@ -141,7 +146,10 @@ router.delete('/:id', requireAuth, async (req, res) => {
 // @path    GET /stories/user/:userId
 router.get('/user/:userId', requireAuth, async (req, res) => {
   try {
-    const stories = await Story.find({ user: req.params.userId, status: 'public' })
+    const stories = await Story.find({
+      user: req.params.userId,
+      status: 'public',
+    })
       .sort({ createdAt: 'desc' })
       .populate('user')
       .lean();
@@ -149,7 +157,7 @@ router.get('/user/:userId', requireAuth, async (req, res) => {
     res.status(200).render('stories/index', {
       stories,
       helper: req.app.locals.ejsHelper,
-      subtitle: true
+      subtitle: true,
     });
   } catch (err) {
     console.error(err);

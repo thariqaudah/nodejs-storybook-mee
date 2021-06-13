@@ -23,16 +23,39 @@
       </div>
     </div>
 
-     <!-- Comments -->
-   <h5 class="mt-4">Comments</h5>
-     <form action="/comments" method="POST">
-       <div class="mb-2">
-         <label for="comment-content" class="form-label">Put your comment below:</label>
-         <textarea class="form-control" name="comment" id="comment-content" rows="3"></textarea>
-       </div>
-       <button class="btn btn-primary" type="submit">Send</button>
-      </form>
-      <!-- List of comments below -->
+    <!-- Comments -->
+    <h5 class="mt-4">Comments</h5>
+    <form action="/comments" method="POST">
+      <input type="hidden" name="story" value="<%= story._id %>" />
+      <div class="mb-3">
+        <label for="comment" class="form-label">Put your comment below:</label>
+        <textarea
+          class="form-control"
+          name="content"
+          id="comment"
+          rows="3"
+        ></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+    <!-- List of comments below -->
+    <% if (story.comments) { %>
+    <ul class="list-group list-group-flush mt-4">
+      <% story.comments.forEach(comm => { %>
+      <li class="list-group-item mb-3 py-2">
+        <span class="text-secondary fw-bolder"
+          ><small><%= comm.user.displayName %></small></span
+        >
+        <span class="text-secondary"
+          ><small
+            ><%- helper.formatDate(comm.createdAt, 'D MMM') %></small
+          ></span
+        >
+        <span class="d-block"> <%= comm.content %> </span>
+      </li>
+      <% }) %>
+    </ul>
+    <% } %>
   </div>
 
   <div class="col-md-4 col-sm-12">
